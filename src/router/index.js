@@ -24,84 +24,13 @@ const routes = [
         name: 'Theme',
         redirect: '/theme/typography',
       },
+       // TODO : change me later AjouterUtilisateur
       {
-        path: '/theme/AjouterUtilisateur',
-        name: 'Ajouter un utilisateur',
+        path: '/theme/Visualisation',
+        name: 'Visualisation des données',
         component: () => import('@/views/theme/AjouterUtilisateur.vue'),
       },
-      {
-        path: '/theme/ListUtilisateur',
-        name: 'Lister les utilisateurs',
-        component: () => import('@/views/theme/ListerUtilisateur.vue'),
-      },
-      {
-        path: '/base',
-        name: 'Base',
-        component: {
-          render() {
-            return h(resolveComponent('router-view'))
-          },
-        },
-        redirect: '/base/breadcrumbs',
-        children: [
-          {
-            path: '/base/ListerProduit',
-            name: 'Lister les Produits',
-            component: () => import('@/views/base/ListerProduits.vue'),
-          },
-          {
-            path: '/base/AjouterProduit',
-            name: 'Ajouter un Produit',
-            component: () => import('@/views/base/AjouterProduit.vue'),
-          },
-        ],
-      },
-      {
-        path: '/buttons',
-        name: 'Buttons',
-        component: {
-          render() {
-            return h(resolveComponent('router-view'))
-          },
-        },
-        redirect: '/buttons/standard-buttons',
-        children: [
-          {
-            path: '/buttons/AjouterCommande',
-            name: 'Ajouter une commande',
-            component: () => import('@/views/buttons/AjouterCommande.vue'),
-          },
-          {
-            path: '/buttons/ListerCommandes',
-            name: 'Lister les Commandes',
-            component: () => import('@/views/buttons/ListerCommandes.vue'),
-          },
-        ],
-      },
 
-
-      {
-        path: '/icons',
-        name: 'Icons',
-        component: {
-          render() {
-            return h(resolveComponent('router-view'))
-          },
-        },
-        redirect: '/icons/coreui-icons',
-        children: [
-          {
-            path: '/icons/ListerCours',
-            name: 'Lister les cours',
-            component: () => import('@/views/icons/ListeCours.vue'),
-          },
-          {
-            path: '/icons/TableauDeBord',
-            name: 'Tableau de bord',
-            component: () => import('@/views/icons/TableauDeBord.vue'),
-          },
-        ],
-      },
       {
         path: '/pages/404',
         name: 'Fournisseurs',

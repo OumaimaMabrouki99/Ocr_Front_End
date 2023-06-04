@@ -31,6 +31,7 @@
     "core-js": "^3.26.1",
     "jspdf": "^2.5.1",
     "jspdf-autotable": "^3.5.28",
+    "powerbi-client": "^2.22.3",
     "primeflex": "^3.3.0",
     "primeicons": "^6.0.1",
     "primevue": "^3.26.1",
