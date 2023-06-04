@@ -381,41 +381,11 @@ export default {
      }
    },
   methods:{
-    async   getALL(){
-      const response = await fetch('http://127.0.0.1:5001/parkingapp-af332/us-central1/getUsers',{
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-      const data = await response.json();
-      return data.length;
-    },
-    async  getProducts (){
-      const response2 = await fetch('http://127.0.0.1:5001/parkingapp-af332/us-central1/getProducts',{
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-      const data2 = await response2.json();
-      return  data2.length;
-    },
-    async getCommandes (){
-      const response3 = await fetch('http://127.0.0.1:5001/parkingapp-af332/us-central1/getCommands',{
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-      const data3 = await response3.json();
-      return  data3.length;
-    }
+
+
   },
   async mounted() {
-    this.users = await this.getALL();
-    this.products =await  this.getProducts();
-    this.commandes = await this.getCommandes();
+
   },
 
 
