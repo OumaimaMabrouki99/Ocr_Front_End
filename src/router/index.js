@@ -61,6 +61,7 @@ const routes = [
       {
         path: 'login',
         name: 'Login',
+        DefaultLayout,
         component: () => import('@/views/pages/Login'),
       },
       {

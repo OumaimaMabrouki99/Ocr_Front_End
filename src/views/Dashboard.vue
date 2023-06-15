@@ -9,7 +9,7 @@
               <CCol :sm="5">
                 <h4 id="traffic" class="card-title mb-0">FileUpload</h4>
                 <!-- TODO : add description  HERE -->
-                <div class="small text-medium-emphasis">DESCRIPTION HERE</div>
+                <div class="small text-medium-emphasis">Choisissez votre Bon de commande</div>
               </CCol>
               <CCol :sm="7" class="d-none d-md-block">
                 <CButton color="primary" class="float-end">
@@ -38,8 +38,7 @@
                       <Button @click="clearCallback()" icon="pi pi-times" rounded outlined severity="danger" :disabled="!files || files.length === 0"></Button>
                     </div>
                     <ProgressBar :value="totalSizePercent" :showValue="false" :class="['md:w-20rem h-1rem w-full md:ml-auto', { 'exceeded-progress-bar': totalSizePercent > 100 }]"
-                    ><span class="white-space-nowrap">{{ totalSize }}B / 1Mb</span></ProgressBar
-                    >
+                    ><span class="white-space-nowrap">{{ totalSize }}B / 1Mb</span></ProgressBar>
                   </div>
                 </template>
                 <template #content="{ files, uploadedFiles, removeUploadedFileCallback, removeFileCallback }">
@@ -85,7 +84,8 @@
         </CCard>
       </CCol>
     </CRow>
-    <Toast/>
+    <Toast ref="toast" position="top-right" />
+
   </div>
 </template>
 
@@ -100,7 +100,7 @@ import WidgetsStatsA from './widgets/WidgetsStatsTypeA.vue'
 import WidgetsStatsD from './widgets/WidgetsStatsTypeD.vue'
 import FileUpload from "primevue/fileupload";
 import axios from "axios";
-
+import {useToast} from "primevue/usetoast";
 export default {
   name: 'Dashboard',
   components: {
@@ -113,7 +113,11 @@ export default {
       files: [],
       totalSize: 0,
       totalSizePercent: 0,
+      toast:null
     }
+  },
+  created() {
+    this.toast = useToast();
   },
   methods:{
     onRemoveTemplatingFile(file, removeFileCallback, index) {
@@ -134,22 +138,46 @@ export default {
         this.totalSize += parseInt(this.formatSize(file.size));
       });
     },
-    uploadEvent(callback,file) {
-      console.log("Hello");
-      const filepath = URL.createObjectURL(file[0])
-      console.log(file[0]);
+    async uploadEvent(callback,file) {
+      console.log("********************")
+      console.log(file.length);
+      for(let i=0;i<file.length;i++){
        const formData = new FormData();
-        formData.append('file', file[0]);
-        axios
-          .post("http://localhost:5000/upload",formData,{
+        formData.append('file', file[i]);
+       await  axios.post("http://localhost:5000/upload",formData,{
             headers: {
               "Content-Type": "multipart/form-data",
             },
-          }).then((response)=>{
-            if(response.data.status === 200){
-              window.alert("File uploaded")
-            }
-        })
+          }).then((response) => {
+            console.log(response);
+            if(response.status === 200){
+              console.log("test")
+              this.toast.add({
+                severity: "success",
+                summary: "Success",
+                detail: "Bon de commande ajouté" + i,
+                life: 3000,
+              });
+          }
+        }).catch((error) => {
+           this.toast.add({
+            severity: "error",
+            summary: "Error",
+            detail: "Erreur lors de l'ajout du bon de commande",
+            life: 3000,
+           });
+            console.error(error);
+        });
+       if(i === file.length){
+         this.toast.add({
+           severity: "info",
+           summary: "Success",
+           detail: "Tous les bons de commandes ajoutés avec succès",
+           life: 3000,
+         });
+       }
+      }
+
       this.totalSizePercent = this.totalSize / 10;
       callback();
     },
@@ -169,128 +197,6 @@ export default {
       return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
     }
   },
-  setup() {
-    const progressGroupExample1 = [
-      { title: 'Monday', value1: 34, value2: 78 },
-      { title: 'Tuesday', value1: 56, value2: 94 },
-      { title: 'Wednesday', value1: 12, value2: 67 },
-      { title: 'Thursday', value1: 43, value2: 91 },
-      { title: 'Friday', value1: 22, value2: 73 },
-      { title: 'Saturday', value1: 53, value2: 82 },
-      { title: 'Sunday', value1: 9, value2: 69 },
-    ]
-    const progressGroupExample2 = [
-      { title: 'Male', icon: 'cil-user', value: 53 },
-      { title: 'Female', icon: 'cil-user-female', value: 43 },
-    ]
-    const progressGroupExample3 = [
-      {
-        title: 'Organic Search',
-        icon: 'cib-google',
-        percent: 56,
-        value: '191,235',
-      },
-      { title: 'Facebook', icon: 'cib-facebook', percent: 15, value: '51,223' },
-      { title: 'Twitter', icon: 'cib-twitter', percent: 11, value: '37,564' },
-      { title: 'LinkedIn', icon: 'cib-linkedin', percent: 8, value: '27,319' },
-    ]
-    const tableExample = [
-      {
-        avatar: { src: avatar1, status: 'success' },
-        user: {
-          name: 'Yiorgos Avraamu',
-          new: true,
-          registered: 'Jan 1, 2021',
-        },
-        country: { name: 'USA', flag: 'cif-us' },
-        usage: {
-          value: 50,
-          period: 'Jun 11, 2021 - Jul 10, 2021',
-          color: 'success',
-        },
-        payment: { name: 'Mastercard', icon: 'cib-cc-mastercard' },
-        activity: '10 sec ago',
-      },
-      {
-        avatar: { src: avatar2, status: 'danger' },
-        user: {
-          name: 'Avram Tarasios',
-          new: false,
-          registered: 'Jan 1, 2021',
-        },
-        country: { name: 'Brazil', flag: 'cif-br' },
-        usage: {
-          value: 22,
-          period: 'Jun 11, 2021 - Jul 10, 2021',
-          color: 'info',
-        },
-        payment: { name: 'Visa', icon: 'cib-cc-visa' },
-        activity: '5 minutes ago',
-      },
-      {
-        avatar: { src: avatar3, status: 'warning' },
-        user: { name: 'Quintin Ed', new: true, registered: 'Jan 1, 2021' },
-        country: { name: 'India', flag: 'cif-in' },
-        usage: {
-          value: 74,
-          period: 'Jun 11, 2021 - Jul 10, 2021',
-          color: 'warning',
-        },
-        payment: { name: 'Stripe', icon: 'cib-cc-stripe' },
-        activity: '1 hour ago',
-      },
-      {
-        avatar: { src: avatar4, status: 'secondary' },
-        user: { name: 'Enéas Kwadwo', new: true, registered: 'Jan 1, 2021' },
-        country: { name: 'France', flag: 'cif-fr' },
-        usage: {
-          value: 98,
-          period: 'Jun 11, 2021 - Jul 10, 2021',
-          color: 'danger',
-        },
-        payment: { name: 'PayPal', icon: 'cib-cc-paypal' },
-        activity: 'Last month',
-      },
-      {
-        avatar: { src: avatar5, status: 'success' },
-        user: {
-          name: 'Agapetus Tadeáš',
-          new: true,
-          registered: 'Jan 1, 2021',
-        },
-        country: { name: 'Spain', flag: 'cif-es' },
-        usage: {
-          value: 22,
-          period: 'Jun 11, 2021 - Jul 10, 2021',
-          color: 'primary',
-        },
-        payment: { name: 'Google Wallet', icon: 'cib-cc-apple-pay' },
-        activity: 'Last week',
-      },
-      {
-        avatar: { src: avatar6, status: 'danger' },
-        user: {
-          name: 'Friderik Dávid',
-          new: true,
-          registered: 'Jan 1, 2021',
-        },
-        country: { name: 'Poland', flag: 'cif-pl' },
-        usage: {
-          value: 43,
-          period: 'Jun 11, 2021 - Jul 10, 2021',
-          color: 'success',
-        },
-        payment: { name: 'Amex', icon: 'cib-cc-amex' },
-        activity: 'Last week',
-      },
-    ]
 
-    return {
-      tableExample,
-      progressGroupExample1,
-      progressGroupExample2,
-      progressGroupExample3,
-    }
-  },
 }
 </script>

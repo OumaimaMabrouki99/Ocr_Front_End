@@ -10,7 +10,7 @@
       </CDropdownHeader>
       <CDropdownItem> <CIcon icon="cil-user" /> Profile </CDropdownItem>
 
-      <CDropdownItem> <CIcon icon="cil-lock-locked" /><a href="http://localhost:8080/#/pages/login"> Logout</a></CDropdownItem>
+      <CDropdownItem> <CIcon icon="cil-lock-locked" /><a href="http://localhost:8081/#/pages/login"> Logout</a></CDropdownItem>
     </CDropdownMenu>
   </CDropdown>
 </template>

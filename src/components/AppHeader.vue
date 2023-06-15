@@ -12,7 +12,7 @@
           <CNavLink href="/dashboard"> Dashboard </CNavLink>
         </CNavItem>
         <CNavItem>
-          <CNavLink href="http://localhost:8080/#/theme/AjouterUtilisateur">Power BI</CNavLink>
+          <CNavLink href="http://localhost:8081/#/theme/AjouterUtilisateur">Power BI</CNavLink>
         </CNavItem>
         <CNavItem>
           <CNavLink href="#">Paramétres</CNavLink>

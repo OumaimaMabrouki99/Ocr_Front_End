@@ -15,7 +15,7 @@
                     <CInputGroupText>
                       <CIcon icon="cil-user" />
                     </CInputGroupText>
-                    <CFormInput placeholder="Email" v-model="mail"/>
+                    <CFormInput placeholder="aaaa@teamwillgroup.com" v-model="mail"/>
                   </CInputGroup>
                   <CInputGroup class="mb-4">
                     <CInputGroupText>
@@ -45,9 +45,8 @@
               <CCardBody class="text-center">
                 <div>
                   <p style="color:grey">Bienvenue dans la plateforme  !</p>
-                  <CButton color="dark" disabled="disabled" variant="outline"  class="mt-3">
-                    Créer un compte
-                  </CButton>
+                  <Button severity="success" color="success" class="px-4 mt-3" label="Créer un compte"  @click="redirectToRegister" />
+
                 </div>
               </CCardBody>
             </CCard>
@@ -70,7 +69,7 @@ export default {
     return{
       mail:"",
       pass:"",
-      logindata:{username:"",password:""},
+      logindata:{email:"",password:""},
       toast:null
     }
   },
@@ -79,7 +78,7 @@ export default {
   },
   methods:{
     async verifuser(){
-      this.logindata.username = this.mail;
+      this.logindata.email = this.mail;
       this.logindata.password = this.pass;
        axios.post("http://127.0.0.1:5000/login",this.logindata)
          .then(response=>{
@@ -88,7 +87,7 @@ export default {
                severity: "success",
                summary: "Connexion réussie",
                detail: "Vous êtes connecté",
-               life: 3000,
+               life: 3000
              });
              this.$router.push("/dashboard");
            }else{
@@ -96,10 +95,23 @@ export default {
                severity: "error",
                summary: "Connexion échouée",
                detail: "Vérifiez vos identifiants",
-               life: 3000,
+               life: 3000
              });
            }
          })
+         .catch(error => {
+          console.error(error);
+          this.toast.add({
+            severity: "error",
+            summary: "Connexion échouée",
+            detail: "Une erreur s'est produite",
+            life: 3000
+          });
+         });
+    },
+
+    redirectToRegister() {
+      this.$router.push('/pages/Register');
     }
   }
 }
