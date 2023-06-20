@@ -8,7 +8,7 @@ const routes = [
     path: '/',
     name: 'Home',
     component: DefaultLayout,
-    redirect: '/dashboard',
+    redirect: '/pages/login',
     children: [
       {
         path: '/dashboard',
@@ -52,11 +52,6 @@ const routes = [
         path: '404',
         name: 'Page404',
         component: () => import('@/views/pages/Page404'),
-      },
-      {
-        path: '500',
-        name: 'Page500',
-        component: () => import('@/views/pages/Page500'),
       },
       {
         path: 'login',

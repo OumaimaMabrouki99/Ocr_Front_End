@@ -13,7 +13,7 @@
   "author": "The CoreUI Team (https://github.com/orgs/coreui/people)",
   "scripts": {
     "build": "vue-cli-service build",
-    "serve": "vue-cli-service serve",
+    "serve": "vue-cli-service serve --port 8081",
     "test:e2e": "vue-cli-service test:e2e",
     "test:unit": "vue-cli-service test:unit"
   },

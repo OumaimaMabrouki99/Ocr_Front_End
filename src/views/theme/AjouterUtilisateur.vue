@@ -11,15 +11,18 @@
           <CIcon icon="cil-drop" />
           Chargement de données
         </CCardHeader>
-        <CCardBody style="height:100%" >
-          <iframe title="Dashboard" width="100%" height="100%"
-                  src="https://app.powerbi.com/view?r=eyJrIjoiMDJiOTBjYzUtYmU3MS00MzIzLTgxM2QtMzY4NDIyODI5OWNhIiwidCI6ImEyZDgzMzZlLWEyOTktNGQ1Mi04NjM2LWI3ZWY4YzExN2ExZCIsImMiOjh9"
-                  frameborder="0" ></iframe>
+        <CCardBody style="height:100%" class="p-0">
+          <div style="padding-bottom: 100%; position: relative;">
+            <iframe title="Dashboard" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"
+                    src="https://app.powerbi.com/view?r=eyJrIjoiMDJiOTBjYzUtYmU3MS00MzIzLTgxM2QtMzY4NDIyODI5OWNhIiwidCI6ImEyZDgzMzZlLWEyOTktNGQ1Mi04NjM2LWI3ZWY4YzExN2ExZCIsImMiOjh9"
+                    frameborder="0"></iframe>
+          </div>
         </CCardBody>
       </CCard>
     </CCol>
   </CRow>
-   <Toast ref="toast" position="top-right" />
+
+  <Toast ref="toast" position="top-right" />
 </template>
 
 <script>
